@@ -38,7 +38,7 @@ class SocialLogin extends Component {
         // redirect
         const { redirectToReferrer } = this.state;
         if (redirectToReferrer) {
-            return <Redirect to="/users" />;
+            return <Redirect to="/" />;
         }
 
         return (
