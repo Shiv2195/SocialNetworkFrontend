@@ -45,9 +45,6 @@ class SocialLogin extends Component {
             <GoogleLogin
                 clientId="312433215085-ks7kdhq34hkn5f88kd55ajrgo9t9je61.apps.googleusercontent.com"
                 buttonText="Login with Google"
-                clientSecret="4UsuMhvZEKEN0BtPAJhqgsNL"
-                callbackURL="https://social-network-frontend-api.herokuapp.com/auth/google/callback"
-                scope={'email'}
                 onSuccess={this.responseGoogle}
                 onFailure={this.responseGoogle}
             />
