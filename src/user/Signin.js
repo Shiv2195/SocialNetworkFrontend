@@ -3,6 +3,8 @@ import { Link, Redirect } from "react-router-dom";
 import { signin, authenticate } from "../auth";
 import SocialLogin from "./SocialLogin";
 
+
+
 class Signin extends Component {
     constructor() {
         super();
@@ -11,7 +13,8 @@ class Signin extends Component {
             password: "",
             error: "",
             redirectToReferer: false,
-            loading: false
+            loading: false, 
+            isVerified: false
         };
     }
 
@@ -19,6 +22,7 @@ class Signin extends Component {
         this.setState({ error: "" });
         this.setState({ [name]: event.target.value });
     };
+    
 
     clickSubmit = event => {
         event.preventDefault();
@@ -61,6 +65,7 @@ class Signin extends Component {
                     value={password}
                 />
             </div>
+            
             <button
                 onClick={this.clickSubmit}
                 className="btn btn-raised btn-primary"
@@ -119,6 +124,7 @@ class Signin extends Component {
                         Forgot Password
                     </Link>
                 </p>
+               
             </div>
         );
     }

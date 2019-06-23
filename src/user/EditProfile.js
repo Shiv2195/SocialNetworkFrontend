@@ -45,7 +45,7 @@ class EditProfile extends Component {
 
     isValid = () => {
         const { name, email, password, fileSize } = this.state;
-        if (fileSize > 100000) {
+        if (fileSize > 1000000) {
             this.setState({
                 error: "File size should be less than 100kb",
                 loading: false
@@ -93,13 +93,19 @@ class EditProfile extends Component {
             const token = isAuthenticated().token;
 
             update(userId, token, this.userData).then(data => {
-                if (data.error) this.setState({ error: data.error });
-                else
+                if (data.error) {
+                    this.setState({ error: data.error });
+                } else if (isAuthenticated().user.role === "admin") {
+                    this.setState({
+                        redirectToProfile: true
+                    });
+                } else {
                     updateUser(data, () => {
                         this.setState({
                             redirectToProfile: true
                         });
                     });
+                }
             });
         }
     };
@@ -180,8 +186,8 @@ class EditProfile extends Component {
 
         const photoUrl = id
             ? `${
-                  process.env.REACT_APP_API_URL
-              }/user/photo/${id}?${new Date().getTime()}`
+            process.env.REACT_APP_API_URL
+            }/user/photo/${id}?${new Date().getTime()}`
             : DefaultProfile;
 
         return (
@@ -199,8 +205,8 @@ class EditProfile extends Component {
                         <h2>Loading...</h2>
                     </div>
                 ) : (
-                    ""
-                )}
+                        ""
+                    )}
 
                 <img
                     style={{ height: "200px", width: "auto" }}
@@ -210,8 +216,13 @@ class EditProfile extends Component {
                     alt={name}
                 />
 
-                {this.signupForm(name, email, password, about)}
-            </div>
+                {isAuthenticated().user.role === "admin" &&
+                    this.signupForm(name, email, password, about)}
+
+                {isAuthenticated().user._id === id &&
+                    this.signupForm(name, email, password, about)}           
+                    
+             </div>
         );
     }
 }
